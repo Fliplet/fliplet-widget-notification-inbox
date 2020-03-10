@@ -1,5 +1,6 @@
 <div class="notification \{{#if readStatus}}notification-read\{{else}}notification-unread\{{/if}}\{{#if hasLink}} has-action\{{/if}}" data-notification-id="\{{id}}" data-notification-status="\{{status}}">
-  \{{#if data.title}}<h2 class="title">\{{#unless readStatus}}<div class="notification-badge"></div>\{{/unless}}\{{data.title}}</h2>\{{/if}}
+  \{{#unless readStatus}}<div class="notification-badge"></div>\{{/unless}}
+  \{{#if data.title}}<h2 class="title">\{{data.title}}</h2>\{{/if}}
   \{{#if data.message}}<div class="description">\{{data.message}}</div>\{{/if}}
   \{{#if hasLink}}<a class="action" href="#">See more</a>\{{/if}}
   <div class="subtitle" title="\{{moment orderAt format="YYYY-MM-DD hh:mm:ss A"}}">\{{moment orderAt calendar="null"}}</div>

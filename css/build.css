@@ -83,7 +83,10 @@
 }
 
 [data-notification-inbox-1-0-0-id] .notification .notification-badge {
-  position: static;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: auto;
   display: inline-block;
   line-height: 1;
   height: 12px;
