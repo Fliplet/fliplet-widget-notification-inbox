@@ -15,6 +15,13 @@ function attachObservers() {
   // Update Studio interface labels
   $(window).on('resize', Fliplet.Widget.autosize);
 
+  // Toggle save button after notifications overlay closes
+  window.addEventListener('message', function(event) {
+    if (event.data.event === 'overlay-close') {
+      Fliplet.Widget.resetSaveButtonLabel();
+    }
+  });
+
   // Fired from Fliplet Studio when the external save button is clicked
   Fliplet.Widget.onSaveRequest(function () {
     return saveWidget();
@@ -36,9 +43,6 @@ function attachObservers() {
 
 function init() {
   var data = Fliplet.Widget.getData() || {};
-
-  // Activate Nofifications app component
-  Fliplet.API.request('v1/widget-instances/com.fliplet.notifications/interface?appId=' + Fliplet.Env.get('appId'));
 
   // Restore form data
   $('#show_demo').prop('checked', data.mode === 'demo');

@@ -10,25 +10,17 @@ Fliplet.Widget.instance('notification-inbox-1-0-0', function (data) {
   var inbox = new NotificationInbox(element, data);
 
   Fliplet().then(function () {
-    if (data.mode === 'demo') {
+    if (data.mode === 'demo' && Fliplet.App.isPreview(true)) {
       // Initialize inbox as demo
       inbox.init({
         mode: 'demo'
       });
       return;
     }
-
-    if (!Fliplet.Registry.get('fliplet-widget-notifications:1.0:core')) {
-      // Notifications add-on isn't available
-      // Initialize inbox as empty
-      inbox.init({
-        mode: 'empty'
-      });
-    }
   });
 
   Fliplet.Hooks.on('beforeNotificationsInit', function (appComponentData, options) {
-    if (data.mode === 'demo') {
+    if (data.mode === 'demo' && Fliplet.App.isPreview(true)) {
       return;
     }
 
