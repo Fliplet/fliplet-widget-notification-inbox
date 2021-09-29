@@ -1,17 +1,17 @@
 {
     "widgets": {
         "notificationInbox": {
-            "dataSource": {
-                "loadMore": "Load more",
-                "noNotification": {
-                    "title": "No notifications yet",
-                    "instruction": "Check again later for updates"
-                },
-                "notificationError": "There was an error loading notifications",
-                "toolbar": {
-                    "unread": "unread",
-                    "action": "Mark all as read"
-                }
+            "actions": {
+                "loadMore": "Load more"
+            },
+            "noNotification": {
+                "title": "No notifications yet",
+                "instruction": "Check again later for updates"
+            },
+            "error": "There was an error loading notifications",
+            "toolbar": {
+                "unread": "unread",
+                "action": "Mark all as read"
             }
         }
     }
