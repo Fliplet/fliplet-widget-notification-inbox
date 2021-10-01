@@ -31,7 +31,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.notificationsError"] = Handleb
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3=container.escapeExpression;
 
-  return "<p><span class=\"unread-count\">{{count}}</span> "
+  return "<p><span class=\"unread-count\">{{TN count}}</span> "
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.unread",{"name":"T","hash":{},"data":data}))
     + " <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">"
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.action",{"name":"T","hash":{},"data":data}))
