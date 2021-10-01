@@ -34,7 +34,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.templat
   return "<p><span class=\"unread-count\">{{TN count}}</span> "
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.unread",{"name":"T","hash":{},"data":data}))
     + " <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">"
-    + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.action",{"name":"T","hash":{},"data":data}))
+    + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.actions.readAll",{"name":"T","hash":{},"data":data}))
     + "</a>)</span><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
 },"useData":true});
 

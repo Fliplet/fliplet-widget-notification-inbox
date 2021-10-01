@@ -13,7 +13,9 @@
       },
       "toolbar": {
         "unread": "unread",
-        "action": "Mark all as read"
+        "actions": {
+          "readAll": "Mark all as read"
+        }
       }
     }
   }
