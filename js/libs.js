@@ -120,7 +120,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
     var tpl = Handlebars.compile(Fliplet.Widget.Templates['templates.toolbar']());
     var html = tpl({
-      count: Math.max(0, count)
+      count: TN(Math.max(0, count))
     });
 
     $container.addClass('notifications-has-unread');
