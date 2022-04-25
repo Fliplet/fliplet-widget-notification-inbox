@@ -301,6 +301,9 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
           return !notification.deletedAt && notification.status !== 'draft';
         }).length) {
           noNotificationsFound();
+        } else {
+          $('.notification-read').hide();
+          $('.notification-unread').show();
         }
       });
 
@@ -367,6 +370,19 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
       })
       .on('click', '[data-refresh]', function() {
         checkForUpdates();
+      })
+      .on('click', '.switch-toogle-holder', function() {
+        var isChecked = document.getElementById('notificationToggle').checked;
+
+        if (isChecked) {
+          document.getElementById('notificationToggle').checked = false;
+          $('.notification-read').show();
+          $('.notification-unread').show();
+        } else {
+          document.getElementById('notificationToggle').checked = true;
+          $('.notification-read').hide();
+          $('.notification-unread').show();
+        }
       });
   }
 
