@@ -19,7 +19,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.notificationsError"] = Handleb
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<p><span class=\"unread-count\">{{TN count}}</span> unread <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">Mark all as read</a>)</span><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
+    return "<div class=\"switch-toogle-holder\"><label class=\"switch\"><input type=\"checkbox\" id=\"notificationToggle\" checked><span class=\"slider round\"></span></label><span only-show-unread>Only show unread</span></div><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i><div class=\"unread\"><span class=\"unread-count\">{{TN count}}</span> unread <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">Mark all as read</a>)</div></span>\r\n";
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar.empty"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
