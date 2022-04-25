@@ -23,5 +23,5 @@ this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.templat
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar.empty"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<p><div class=\"switch-toogle-holder\"><label class=\"switch\"><input type=\"checkbox\" id=\"notificationToggle\" checked><span class=\"slider round\"></span></label><span only-show-unread>Only show unread</span></div><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
+    return "<p>&nbsp;<i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>";
 },"useData":true});
