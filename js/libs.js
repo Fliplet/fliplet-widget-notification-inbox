@@ -118,6 +118,8 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
       return;
     }
 
+    $notifications.find('.no-notifications').remove();
+
     var tpl = Handlebars.compile(Fliplet.Widget.Templates['templates.toolbar']());
     var html = tpl({
       count: Math.max(0, count)
@@ -282,6 +284,9 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
   function noNotificationsFound() {
     $('.notifications').html(Fliplet.Widget.Templates['templates.noNotifications']());
     updateUnreadCount(0);
+    setTimeout(function() {
+      changeToggleStatus('Show all notification', false);
+    }, 5);
     Fliplet.Studio.emit('get-selected-widget');
   }
 
@@ -340,6 +345,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
         });
         markAsRead(id).then(function() {
           parseNotificationAction(id);
+          $('.notification-read').hide();
         }).catch(function() {
           parseNotificationAction(id);
         });
@@ -350,7 +356,9 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
           category: 'notification_inbox',
           action: 'notification_read_all'
         });
-        markAllAsRead();
+        markAllAsRead().then(function() {
+          $('.notification-read').hide();
+        });
       })
       .on('click', '[data-load-more]', function(e) {
         e.preventDefault();
@@ -370,19 +378,20 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
       })
       .on('click', '[data-refresh]', function() {
         checkForUpdates();
+        showUnreadNotification();
       })
-      .on('click', '.switch-toogle-holder', function() {
+      .on('click', '.switch-toggle-holder', function() {
         var isChecked = document.getElementById('notificationToggle').checked;
 
-        if (isChecked) {
-          document.getElementById('notificationToggle').checked = false;
-          $('.notification-read').show();
-          $('.notification-unread').show();
-        } else {
-          document.getElementById('notificationToggle').checked = true;
-          $('.notification-read').hide();
-          $('.notification-unread').show();
-        }
+        checkForUpdates().then(function() {
+          if (isChecked) {
+            changeToggleStatus('Show all notification', false);
+            showAllNotification();
+          } else {
+            changeToggleStatus('Only show unread', true);
+            showUnreadNotification();
+          }
+        });
       });
   }
 
@@ -459,6 +468,20 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
     if (pushWidget) {
       pushWidget.ask();
     }
+  }
+
+  function showAllNotification() {
+    $('.notification-read, .notification-unread').show();
+  }
+
+  function showUnreadNotification() {
+    $('.notification-read').hide();
+    $('.notification-unread').show();
+  }
+
+  function changeToggleStatus(toggleText, toggle) {
+    $('.switch-toggle-holder > span').text(toggleText);
+    document.getElementById('notificationToggle').checked = toggle;
   }
 
   attachObservers();
