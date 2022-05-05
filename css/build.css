@@ -199,3 +199,11 @@
   float: left;
   padding-left: 10px;
 }
+
+[data-notification-inbox-1-0-0-id] .unread-label {
+  display: block;
+}
+
+[data-notification-inbox-1-0-0-id] .show-all-label {
+  display: none;
+}

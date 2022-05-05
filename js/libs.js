@@ -285,8 +285,8 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
     $('.notifications').html(Fliplet.Widget.Templates['templates.noNotifications']());
     updateUnreadCount(0);
     setTimeout(function() {
-      changeToggleStatus('Show all notification', false);
-    }, 5);
+      changeToggleStatus(false);
+    }, 100);
     Fliplet.Studio.emit('get-selected-widget');
   }
 
@@ -309,6 +309,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
         } else {
           $('.notification-read').hide();
           $('.notification-unread').show();
+          changeToggleText(true);
         }
       });
 
@@ -385,10 +386,10 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
         checkForUpdates().then(function() {
           if (isChecked) {
-            changeToggleStatus('Show all notification', false);
+            changeToggleStatus(false);
             showAllNotification();
           } else {
-            changeToggleStatus('Only show unread', true);
+            changeToggleStatus(true);
             showUnreadNotification();
           }
         });
@@ -479,9 +480,19 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
     $('.notification-unread').show();
   }
 
-  function changeToggleStatus(toggleText, toggle) {
-    $('.switch-toggle-holder > span').text(toggleText);
+  function changeToggleStatus(toggle) {
     document.getElementById('notificationToggle').checked = toggle;
+    changeToggleText(toggle);
+  }
+
+  function changeToggleText(toggle) {
+    if (toggle) {
+      $('.unread-label').show();
+      $('.show-all-label').hide();
+    } else {
+      $('.unread-label').hide();
+      $('.show-all-label').show();
+    }
   }
 
   attachObservers();
