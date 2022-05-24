@@ -35,7 +35,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.templat
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.unread",{"name":"T","hash":{},"data":data}))
     + " <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">"
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.actions.readAll",{"name":"T","hash":{},"data":data}))
-    + "</a>)</span><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></div>\r\n";
+    + "</a>)</span></div>\r\n";
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar.empty"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
