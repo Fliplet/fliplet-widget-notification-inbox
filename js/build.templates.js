@@ -31,13 +31,13 @@ this["Fliplet"]["Widget"]["Templates"]["templates.notificationsError"] = Handleb
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3=container.escapeExpression;
 
-  return "<p><span class=\"unread-count\">{{TN count}}</span> "
+    return "<div class=\"switch-toggle-holder\"><label class=\"switch\"><input type=\"checkbox\" id=\"notificationToggle\" checked><span class=\"slider round\"></span></label><span class=\"unread-label\">Only show unread</span><span class=\"show-all-label\">Show all notification</span></div><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i><div class=\"unread\"><span class=\"unread-count\">{{TN count}}</span> "
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.unread",{"name":"T","hash":{},"data":data}))
     + " <span class=\"toolbar-read-all\">(<a data-read-all href=\"#\">"
     + alias3((helpers.T || (depth0 && depth0.T) || alias2).call(alias1,"widgets.notificationInbox.toolbar.actions.readAll",{"name":"T","hash":{},"data":data}))
-    + "</a>)</span><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
+    + "</a>)</span><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></div>\r\n";
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.toolbar.empty"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<p>&nbsp;<i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
+    return "<p><div class=\"switch-toggle-holder\"><label class=\"switch\"><input type=\"checkbox\" id=\"notificationToggle\" checked><span class=\"slider round\"></span></label><span class=\"unread-label\">Only show unread</span><span class=\"show-all-label\">Show all notification</span></div><i class=\"fa fa-lg fa-fw fa-cog pull-right\" data-settings></i><i class=\"fa fa-lg fa-fw fa-refresh pull-right\" data-refresh></i></p>\r\n";
 },"useData":true});
