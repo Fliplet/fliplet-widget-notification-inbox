@@ -90,6 +90,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
     notifications[index] = notification;
     $('[data-notification-id="' + notification.id + '"]').replaceWith(html);
+    $('.notification-read').hide();
     Fliplet.Studio.emit('get-selected-widget');
   }
 
@@ -285,7 +286,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
     $('.notifications').html(Fliplet.Widget.Templates['templates.noNotifications']());
     updateUnreadCount(0);
     setTimeout(function() {
-      changeToggleStatus(true);
+      changeToggleStatus(false);
     }, 100);
     Fliplet.Studio.emit('get-selected-widget');
   }
@@ -306,10 +307,6 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
           return !notification.deletedAt && notification.status !== 'draft';
         }).length) {
           noNotificationsFound();
-        } else {
-          $('.notification-read').hide();
-          $('.notification-unread').show();
-          changeToggleText(true);
         }
       });
 
@@ -411,7 +408,6 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
   function showUnreadNotification() {
     $('.notification-read').hide();
-    $('.notification-unread').show();
   }
 
   function changeToggleText(toggle) {
