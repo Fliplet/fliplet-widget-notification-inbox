@@ -75,6 +75,8 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
       $notifications.after($loadMore);
     }
 
+    $('.notification-read').hide();
+
     Fliplet.Studio.emit('get-selected-widget');
   }
 
