@@ -90,6 +90,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
     notifications[index] = notification;
     $('[data-notification-id="' + notification.id + '"]').replaceWith(html);
+    $('.notification-read').hide();
     Fliplet.Studio.emit('get-selected-widget');
   }
 
@@ -117,6 +118,8 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
 
       return;
     }
+
+    $notifications.find('.no-notifications').remove();
 
     var tpl = Handlebars.compile(Fliplet.Widget.Templates['templates.toolbar']());
     var html = tpl({
@@ -282,6 +285,9 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
   function noNotificationsFound() {
     $('.notifications').html(Fliplet.Widget.Templates['templates.noNotifications']());
     updateUnreadCount(0);
+    setTimeout(function() {
+      changeToggleStatus(false);
+    }, 100);
     Fliplet.Studio.emit('get-selected-widget');
   }
 
@@ -337,6 +343,7 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
         });
         markAsRead(id).then(function() {
           parseNotificationAction(id);
+          $('.notification-read').hide();
         }).catch(function() {
           parseNotificationAction(id);
         });
@@ -347,7 +354,9 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
           category: 'notification_inbox',
           action: 'notification_read_all'
         });
-        markAllAsRead();
+        markAllAsRead().then(function() {
+          $('.notification-read').hide();
+        });
       })
       .on('click', '[data-load-more]', function(e) {
         e.preventDefault();
@@ -367,7 +376,48 @@ Fliplet.Registry.set('notification-inbox:1.0:core', function(element, data) {
       })
       .on('click', '[data-refresh]', function() {
         checkForUpdates();
+        showUnreadNotification();
+        changeToggleStatus(true);
+      })
+      .on('click', '.switch-toggle-holder', function(e) {
+        e.preventDefault();
+
+        var isChecked = document.getElementById('notificationToggle').checked;
+
+        checkForUpdates().then(function() {
+          if (isChecked) {
+            changeToggleStatus(false);
+            showAllNotification();
+          } else {
+            changeToggleStatus(true);
+            showUnreadNotification();
+          }
+        });
       });
+  }
+
+  function changeToggleStatus(toggle) {
+    document.getElementById('notificationToggle').checked = toggle;
+
+    changeToggleText(toggle);
+  }
+
+  function showAllNotification() {
+    $('.notification-read, .notification-unread').show();
+  }
+
+  function showUnreadNotification() {
+    $('.notification-read').hide();
+  }
+
+  function changeToggleText(toggle) {
+    if (toggle) {
+      $('.label-unread').show();
+      $('.label-show-all').hide();
+    } else {
+      $('.label-unread').hide();
+      $('.label-show-all').show();
+    }
   }
 
   function initDemo() {
