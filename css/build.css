@@ -200,10 +200,10 @@
   padding-left: 10px;
 }
 
-[data-notification-inbox-1-0-0-id] .unread-label {
+[data-notification-inbox-1-0-0-id] .label-unread {
   display: block;
 }
 
-[data-notification-inbox-1-0-0-id] .show-all-label {
+[data-notification-inbox-1-0-0-id] .label-show-all {
   display: none;
 }
