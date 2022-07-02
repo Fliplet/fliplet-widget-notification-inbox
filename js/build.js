@@ -14,6 +14,8 @@ Fliplet.Widget.instance('notification-inbox-1-0-0', function(data) {
   });
 
   Fliplet.Hooks.on('beforeNotificationsInit', function() {
+    $(element).translate();
+
     if (data.mode === 'demo' && Fliplet.App.isPreview(true)) {
       // Initialize inbox as demo
       inbox.init({
