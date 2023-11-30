@@ -1,28 +1,23 @@
-var appSettingsBadgeType;
-
 function saveWidget() {
-  var saveAppSettings = Promise.resolve();
   var badgeType = $('[name="notificationsBadgeType"]:checked').val();
 
-  // Update app settings if the value has changed
-  if (badgeType && badgeType !== appSettingsBadgeType) {
-    saveAppSettings = Fliplet.App.Settings.set({
-      notificationsBadgeType: badgeType
+  return Fliplet.App.Settings.set({
+    notificationsBadgeType: badgeType
+  })
+    .then(function() {
+      return Fliplet.Widget.save({
+        notificationsBadgeType: badgeType
+      });
+    })
+    .then(function() {
+      return Fliplet.Widget.complete();
+    })
+    .catch(function(error) {
+      Fliplet.Modal.alert({
+        title: 'Error saving widget',
+        message: Fliplet.parseError(error)
+      });
     });
-  }
-
-  return saveAppSettings.then(function() {
-    return Fliplet.Widget.save({
-      mode: $('#show_demo').prop('checked') ? 'demo' : null
-    });
-  }).then(function() {
-    return Fliplet.Widget.complete();
-  }).catch(function(error) {
-    Fliplet.Modal.alert({
-      title: 'Error saving widget',
-      message: Fliplet.parseError(error)
-    });
-  });
 }
 
 function attachObservers() {
@@ -40,33 +35,16 @@ function attachObservers() {
   Fliplet.Widget.onSaveRequest(function() {
     return saveWidget();
   });
-
-  $('.manage-notifications').on('click', function(e) {
-    e.preventDefault();
-    Fliplet.Studio.emit('overlay', {
-      name: 'notifications',
-      options: {
-        appId: Fliplet.Env.get('appId'),
-        size: 'large',
-        title: 'Notifications',
-        classes: 'publish-option-overlay notifications-widget'
-      }
-    });
-  });
 }
 
 function init() {
-  var data = Fliplet.Widget.getData() || {};
   var badgeType = Fliplet.Env.get('appSettings').notificationsBadgeType;
-
-  appSettingsBadgeType = badgeType;
 
   if (['new', 'unread'].indexOf(badgeType) < 0) {
     badgeType = 'new';
   }
 
   // Restore form data
-  $('#show_demo').prop('checked', data.mode === 'demo');
   $('[name="notificationsBadgeType"][value="' + badgeType + '"]').prop('checked', true);
 
   // Show interface UI after loading
