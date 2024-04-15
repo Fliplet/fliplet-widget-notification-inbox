@@ -74,7 +74,7 @@ Fliplet.Registry.set('notification-inbox:1.0:app:core', function(data) {
         return Fliplet.Cache.set('appNotificationCount', [0, unreadCount])
           .then(function() {
             return saveCounts({
-              newCount: 0,
+              newCount: unreadCount,
               unreadCount: unreadCount
             });
           })
@@ -242,7 +242,7 @@ Fliplet.Registry.set('notification-inbox:1.0:app:core', function(data) {
     return getLatestNotificationCounts(ts, opt)
       .then(function(counts) {
         var data = {
-          newCount: counts[0],
+          newCount: counts[1],
           unreadCount: counts[1]
         };
 
