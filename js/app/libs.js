@@ -172,8 +172,22 @@ Fliplet.Registry.set('notification-inbox:1.0:app:core', function(data) {
       key: 'appNotificationsSeenAt',
       forceBackgroundUpdate: options.force
     }, function updateSession() {
+      let source;
+      const isSourceNative = Fliplet.Env.is('native');
+      const isFlipletViewerSubApp = isSourceNative && Fliplet.Env.get('appVersion') === '(DEV)';
+
+      if (isFlipletViewerSubApp) {
+        source = 'fliplet-viewer';
+      } else if (isSourceNative) {
+        source = 'native';
+      } else if (Fliplet.Env.is('web') && Fliplet.Env.get('mode') === 'view') {
+        source = 'web';
+      } else if (Fliplet.Env.is('web') && Fliplet.Env.get('mode') === 'preview') {
+        source = 'studio';
+      }
+
       return Fliplet.Session.set(
-        { appNotificationsSeenAt: options.seenAt },
+        { appNotificationsSeenAt: options.seenAt, source },
         { required: true }
       );
     });
