@@ -4,6 +4,7 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:core', function(element) {
   var $container = $(element);
   var $notifications = $container.find('.notifications');
 
+  var tokenData = {};
   var notifications = [];
   var $loadMore = $([]);
   var appNotifications;
@@ -30,6 +31,9 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:core', function(element) {
     return Fliplet.API.request({
       method: 'GET',
       url: 'v1/user/notifications',
+      headers: {
+        'Auth-token': tokenData.auth_token
+      },
       data: {
         limit: typeof options.limit !== 'undefined' ? options.limit : BATCH_SIZE,
         offset: typeof options.offset !== 'undefined' ? options.offset : notifications.length,
@@ -524,8 +528,17 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:core', function(element) {
       pushWidget.ask();
     }
 
-    // Initialize notifications
-    getUserNotifications()
+    Fliplet.User.getCachedSession()
+      .then(function(session) {
+        if (session && _.hasIn(session, 'server.passports.flipletLogin')) {
+          tokenData = session.server.passports.flipletLogin[0];
+
+          return tokenData;
+        }
+
+        return Promise.reject('Please login using your Fliplet Studio credentials.');
+      })
+      .then(getUserNotifications)
       .then(function(results) {
         var newNotifications = results && results.notifications || [];
 

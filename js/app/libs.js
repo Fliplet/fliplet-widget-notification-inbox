@@ -1,6 +1,7 @@
 Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
   var BATCH_SIZE = 20;
 
+  var tokenData = {};
   var storageKey = 'flFvAppNotifications';
   var storage;
   var pushNotificationStorageKey = 'flFvPushNotificationPayload';
@@ -53,6 +54,9 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
     return Fliplet.API.request({
       method: 'POST',
       url: 'v1/user/notifications/mark-as-read',
+      headers: {
+        'Auth-token': tokenData.auth_token
+      },
       data: {
         notificationIds: ids
       }
@@ -196,6 +200,9 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
     return Fliplet.API.request({
       method: 'GET',
       url: 'v1/user/notifications',
+      headers: {
+        'Auth-token': tokenData.auth_token
+      },
       data: {
         limit: options.limit || BATCH_SIZE,
         offset: options.offset || 0,
@@ -351,9 +358,21 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
       unreadCount: 0
     };
 
-    return Fliplet.App.Storage.get(storageKey, {
-      defaults: defaults
-    })
+    return Fliplet.User.getCachedSession()
+      .then(function(session) {
+        if (session && _.hasIn(session, 'server.passports.flipletLogin')) {
+          tokenData = session.server.passports.flipletLogin[0];
+
+          return tokenData;
+        }
+
+        return Promise.reject('Please login using your Fliplet Studio credentials.');
+      })
+      .then(function() {
+        return Fliplet.App.Storage.get(storageKey, {
+          defaults: defaults
+        });
+      })
       .then(function(value) {
         storage = value;
 
