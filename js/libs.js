@@ -57,7 +57,7 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:core', function(element) {
           data: {
             limit: typeof options.limit !== 'undefined' ? options.limit : BATCH_SIZE,
             offset: typeof options.offset !== 'undefined' ? options.offset : notifications.length,
-            where: where
+            where: JSON.stringify(where)
           }
         });
       });

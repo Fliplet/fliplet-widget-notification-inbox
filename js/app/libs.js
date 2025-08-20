@@ -226,7 +226,7 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
           data: {
             limit: options.limit || BATCH_SIZE,
             offset: options.offset || 0,
-            where: where
+            where: JSON.stringify(where)
           }
         });
       });
