@@ -197,18 +197,39 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
   function getUserNotifications(options) {
     options = options || {};
 
-    return Fliplet.API.request({
-      method: 'GET',
-      url: 'v1/user/notifications',
-      headers: {
-        'Auth-token': tokenData.auth_token
-      },
-      data: {
-        limit: options.limit || BATCH_SIZE,
-        offset: options.offset || 0,
-        where: options.where ? JSON.stringify(options.where) : undefined
-      }
-    });
+    return Fliplet.Organizations.getCurrentOrganization()
+      .then(function(organization) {
+        var organizationId = organization && organization.id;
+
+        // Base organization filter that's reused across all conditions
+        var organizationFilter = {
+          $or: [
+            { organizationId: { $eq: null } },
+            { organizationId: organizationId }
+          ]
+        };
+
+        var where = {
+          data: organizationFilter
+        };
+
+        if (options.where) {
+          where = Object.assign({}, where, options.where);
+        }
+
+        return Fliplet.API.request({
+          method: 'GET',
+          url: 'v1/user/notifications',
+          headers: {
+            'Auth-token': tokenData.auth_token
+          },
+          data: {
+            limit: options.limit || BATCH_SIZE,
+            offset: options.offset || 0,
+            where: where
+          }
+        });
+      });
   }
 
   function getLatestNotificationCounts(lastClearedAt, options) {
@@ -347,7 +368,7 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
       return Fliplet.Storage.set(pushNotificationStorageKey, payload);
     }
 
-    if (payload.action === 'url' && Fliplet.Navigate.isOnline()) {
+    if (payload.action === 'url' && Fliplet.Navigator.isOnline()) {
       Fliplet.Navigate.to(payload);
     }
   }
