@@ -347,7 +347,7 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:app:core', function() {
       return Fliplet.Storage.set(pushNotificationStorageKey, payload);
     }
 
-    if (payload.action === 'url' && Fliplet.Navigate.isOnline()) {
+    if (payload.action === 'url' && Fliplet.Navigator.isOnline()) {
       Fliplet.Navigate.to(payload);
     }
   }
