@@ -28,18 +28,39 @@ Fliplet.Registry.set('fv-notification-inbox:1.0:core', function(element) {
   function getUserNotifications(options) {
     options = options || {};
 
-    return Fliplet.API.request({
-      method: 'GET',
-      url: 'v1/user/notifications',
-      headers: {
-        'Auth-token': tokenData.auth_token
-      },
-      data: {
-        limit: typeof options.limit !== 'undefined' ? options.limit : BATCH_SIZE,
-        offset: typeof options.offset !== 'undefined' ? options.offset : notifications.length,
-        where: options.where ? JSON.stringify(options.where) : undefined
-      }
-    });
+    return Fliplet.Organizations.getCurrentOrganization()
+      .then(function(organization) {
+        var organizationId = organization && organization.id;
+
+        // Base organization filter that's reused across all conditions
+        var organizationFilter = {
+          $or: [
+            { organizationId: { $eq: null } },
+            { organizationId: organizationId }
+          ]
+        };
+
+        var where = {
+          data: organizationFilter
+        };
+
+        if (options.where) {
+          where = Object.assign({}, where, options.where);
+        }
+
+        return Fliplet.API.request({
+          method: 'GET',
+          url: 'v1/user/notifications',
+          headers: {
+            'Auth-token': tokenData.auth_token
+          },
+          data: {
+            limit: typeof options.limit !== 'undefined' ? options.limit : BATCH_SIZE,
+            offset: typeof options.offset !== 'undefined' ? options.offset : notifications.length,
+            where: JSON.stringify(where)
+          }
+        });
+      });
   }
 
   /**
