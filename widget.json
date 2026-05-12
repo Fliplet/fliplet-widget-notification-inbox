@@ -10,7 +10,8 @@
   "interface": {
     "dependencies": [
       "fliplet-core",
-      "fliplet-studio-ui"
+      "fliplet-studio-ui",
+      "lodash"
     ],
     "assets": [
       "css/interface.css",
@@ -22,7 +23,8 @@
       "jquery",
       "bootstrap",
       "fliplet-session",
-      "fliplet-notifications"
+      "fliplet-notifications",
+      "lodash"
     ],
     "appAssets": [
       "js/app/libs.js",
