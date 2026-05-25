@@ -50,7 +50,7 @@ Fliplet.Registry.set('notification-inbox:1.0:app:core', function(data) {
     var affected;
     var unreadCount;
 
-    notifications = Fliplet.Utils.map(notifications, function(notification) {
+    notifications = _.map(notifications, function(notification) {
       if (typeof notification === 'number') {
         notification = { id: notification };
       }
@@ -85,7 +85,7 @@ Fliplet.Registry.set('notification-inbox:1.0:app:core', function(data) {
             var data = {
               affected: affected,
               unreadCount: unreadCount,
-              ids: Fliplet.Utils.map(notifications, 'id')
+              ids: _.map(notifications, 'id')
             };
 
             Fliplet.Hooks.run('notificationRead', data);

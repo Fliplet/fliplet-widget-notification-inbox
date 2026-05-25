@@ -10,7 +10,6 @@
   "interface": {
     "dependencies": [
       "fliplet-core",
-      "fliplet-utils",
       "fliplet-studio-ui"
     ],
     "assets": [
@@ -22,7 +21,6 @@
     "dependencies": [
       "jquery",
       "bootstrap",
-      "fliplet-utils",
       "fliplet-session",
       "fliplet-notifications"
     ],
